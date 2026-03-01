@@ -14,7 +14,7 @@
 
 **An end-to-end ML pipeline that detects phishing attacks in network traffic — from raw data ingestion to real-time predictions — wrapped in a stunning, modern web interface.**
 
-[Live Demo](#-https://networksecurity-w5dg.onrender.com/) · [Get Started](#-quick-start) · [API Docs](#-api-reference) · [MLflow Dashboard](https://dagshub.com/its-me-meax/networksecurity.mlflow)
+[Live Demo](https://networksecurity-w5dg.onrender.com/) · [Get Started](#-quick-start) · [API Docs](#-api-reference) · [MLflow Dashboard](https://dagshub.com/its-me-meax/networksecurity.mlflow)
 
 ---
 
