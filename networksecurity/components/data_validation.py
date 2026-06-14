@@ -28,7 +28,7 @@ class DataValidation:
         
     def validate_number_of_columns(self,dataframe:pd.DataFrame)->bool:
         try:
-            number_of_columns=len(self._schema_config)
+            number_of_columns=len(self._schema_config.get('columns', {}))
             logging.info(f"Required number of columns:{number_of_columns}")
             logging.info(f"Data frame has columns:{len(dataframe.columns)}")
             if len(dataframe.columns)==number_of_columns:
@@ -82,10 +82,12 @@ class DataValidation:
             if not status:
                 error_message=f"Train dataframe does not contain all columns.\n"
                 logging.error(error_message)
+                raise NetworkSecurityException(error_message, sys)
             status = self.validate_number_of_columns(dataframe=test_dataframe)
             if not status:
                 error_message=f"Test dataframe does not contain all columns.\n"
                 logging.error(error_message)
+                raise NetworkSecurityException(error_message, sys)
 
             ## lets check datadrift
             status=self.detect_dataset_drift(base_df=train_dataframe,current_df=test_dataframe)

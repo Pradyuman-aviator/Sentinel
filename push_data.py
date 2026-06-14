@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 MONGO_DB_URL=os.getenv("MONGO_DB_URL")
-print(MONGO_DB_URL)
 
 import certifi
 ca=certifi.where()
@@ -34,26 +33,26 @@ class NetworkDataExtract():
             raise NetworkSecurityException(e,sys)
         
     def insert_data_mongodb(self, records, database, collection):
-     try:
-        self.database = database
-        self.collection = collection
-        self.records = records
+        try:
+            self.database = database
+            self.collection = collection
+            self.records = records
 
-        import certifi
-        ca = certifi.where()
+            import certifi
+            ca = certifi.where()
 
-        self.mongo_client = pymongo.MongoClient(MONGO_DB_URL, tlsCAFile=ca)
-        self.database = self.mongo_client[self.database]
-        
-        self.collection = self.database[self.collection]
-        self.collection.insert_many(self.records)
-        return len(self.records)
-     except Exception as e:
-        raise NetworkSecurityException(e, sys)
+            self.mongo_client = pymongo.MongoClient(MONGO_DB_URL, tlsCAFile=ca)
+            self.database = self.mongo_client[self.database]
+            
+            self.collection = self.database[self.collection]
+            self.collection.insert_many(self.records)
+            return len(self.records)
+        except Exception as e:
+            raise NetworkSecurityException(e, sys)
 
         
 if __name__=='__main__':
-    FILE_PATH="Network_Data\phisingData.csv"
+    FILE_PATH=r"Network_Data\phisingData.csv"
     DATABASE="Pradyumansh"
     Collection="NetworkData"
     networkobj=NetworkDataExtract()

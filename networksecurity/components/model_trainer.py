@@ -40,8 +40,12 @@ class ModelTrainer:
         try:
             import mlflow
             import dagshub
-            dagshub.init(repo_owner='its-me-meax', repo_name='networksecurity', mlflow=True)
-            tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "https://dagshub.com/its-me-meax/networksecurity.mlflow")
+            
+            repo_owner = os.getenv("DAGSHUB_REPO_OWNER", "its-me-meax")
+            repo_name = os.getenv("DAGSHUB_REPO_NAME", "networksecurity")
+            dagshub.init(repo_owner=repo_owner, repo_name=repo_name, mlflow=True)
+            
+            tracking_uri = os.getenv("MLFLOW_TRACKING_URI", f"https://dagshub.com/{repo_owner}/{repo_name}.mlflow")
             mlflow.set_tracking_uri(tracking_uri)
 
             tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
@@ -132,8 +136,7 @@ class ModelTrainer:
 
         os.makedirs("final_model", exist_ok=True)
         save_object("final_model/model.pkl", best_model)
-
-        
+        save_object("final_model/preprocessor.pkl", preprocessor)
 
         ## Model Trainer Artifact
         model_trainer_artifact=ModelTrainerArtifact(trained_model_file_path=self.model_trainer_config.trained_model_file_path,

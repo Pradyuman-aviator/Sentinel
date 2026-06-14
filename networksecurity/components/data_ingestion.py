@@ -33,7 +33,9 @@ class DataIngestion:
         try:
             database_name=self.data_ingestion_config.database_name
             collection_name=self.data_ingestion_config.collection_name
-            self.mongo_client=pymongo.MongoClient(MONGO_DB_URL)
+            import certifi
+            ca = certifi.where()
+            self.mongo_client=pymongo.MongoClient(MONGO_DB_URL, tlsCAFile=ca)
             collection=self.mongo_client[database_name][collection_name]
 
             df=pd.DataFrame(list(collection.find()))
